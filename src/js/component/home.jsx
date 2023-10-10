@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from "react";
 
-//Disculpen el código spaghetti. Sé que debo componentizar esto...
-
 let apiUrl = "https://playground.4geeks.com/apis/fake/todos/user/carloscopes";
 
 const Home = () => {
@@ -20,6 +18,28 @@ const Home = () => {
 
       if (response.ok) {
         setTaskLIst(data);
+      }
+      if (response.status == 404) {
+        createUser();
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const createUser = async () => {
+    try {
+      let response = await fetch(urlBase, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify([]),
+      });
+      if (response.ok) {
+        getAllTask();
+      } else {
+        console.log("Administrador de sistema");
       }
     } catch (error) {
       console.log(error);
